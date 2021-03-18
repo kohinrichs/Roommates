@@ -10,10 +10,12 @@ namespace Roommates
         //  This is the address of the database.
         //  We define it here as a constant since it will never change.
         private const string CONNECTION_STRING = @"server=localhost\SQLExpress;database=Roommates;integrated security=true";
+        private static object choreRepo;
 
         static void Main(string[] args)
         {
             RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING);
+            ChoreRepository choreRepo = new ChoreRepository(CONNECTION_STRING);
 
             bool runProgram = true;
             while (runProgram)
@@ -60,6 +62,15 @@ namespace Roommates
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+                    case ("Show all chores"):
+                        List<Chore> chores = choreRepo.GetAll();
+                        foreach (Chore c in chores)
+                        {
+                            Console.WriteLine($"{c.Name} has an Id of {c.Id}");
+                        }
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
                     case ("Exit"):
                         runProgram = false;
                         break;
@@ -77,6 +88,7 @@ namespace Roommates
                 "Show all rooms",
                 "Search for room",
                 "Add a room",
+                "Show all chores",
                 "Exit"
             };
 
